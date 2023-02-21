@@ -1,0 +1,10 @@
+.competition_image {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.competition_image:hover {
+    scale: 1.03;
+}
