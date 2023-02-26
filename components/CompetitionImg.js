@@ -2,6 +2,7 @@ import swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import styles from '@/styles/components/CompetitionImg.module.css'
 import { poppins } from 'utils'
+import axios from 'axios'
 
 const Swal = withReactContent(swal)
 
@@ -21,7 +22,7 @@ const CompetitionImg = ({ id, author, classroom, src, fontClass }) => {
             confirmButtonText: 'Envoyer confirmation',
             cancelButtonText: 'Annuler',
             showLoaderOnConfirm: true,
-            preConfirm: (email) => {
+            preConfirm: async (email) => {
                 //Validate if textbox is empty.
                 if (!email || email.length === 0) {
                     Swal.showValidationMessage(`E-mail invalide!`)
@@ -40,6 +41,13 @@ const CompetitionImg = ({ id, author, classroom, src, fontClass }) => {
 
                 if (emailDomain !== 'delasallesantiago.edu.do') {
                     Swal.showValidationMessage(`E-mail invalide!`)
+                }
+
+                try {
+                    const res = await axios.post('/api/send-email', { email })
+                    console.log(res)
+                } catch (err) {
+                    console.error(err)
                 }
             },
         })
