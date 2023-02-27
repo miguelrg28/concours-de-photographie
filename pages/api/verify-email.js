@@ -5,20 +5,24 @@ dbConnect()
 export default async function handler(req, res) {
     switch (req.method) {
         case 'POST':
-            const { id } = req.body
-            console.log(id)
-
-            if (id.length <= 0 || id === '' || id === null) {
-                return res.status(404)
-            }
-
             try {
+                const { id, voteId } = req.body
+
+                if (id.length <= 0 || id === '' || id === null) {
+                    return res.status(404)
+                }
+
+                const userFound = await User.findById(id)
+
+                if (userFound.verified === true) {
+                    return res.status(400).json({ message: 'was-verify' })
+                }
+
                 await User.findByIdAndUpdate(id, { verified: true })
 
-                res.status(200).json({ message: '¡Email validado!' })
+                res.status(200).json({ message: 'already-verify' })
             } catch (err) {
-                console.error(err)
-                res.status(400).json({ error: 'Ha ocurrido un error.' })
+                res.status(500).json({ error: 'Ha ocurrido un error.' })
             }
 
             break

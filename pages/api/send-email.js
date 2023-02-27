@@ -4,23 +4,28 @@ import fs from 'fs'
 import path from 'path'
 import dbConnect from 'utils/dbConnect'
 import User from 'utils/models/User'
+import Picture from 'utils/models/Picture'
 
 dbConnect()
 
 export default async function handler(req, res) {
     switch (req.method) {
         case 'POST':
-            const { email } = req.body
+            const { id, email } = req.body
+
+            if (!id || id.length <= 0) {
+                return res.status(400).json({ error: 'Invalid id.' })
+            }
 
             //* Email validation
             if (!email || email.length === 0) {
-                return res.status(400).json({ error: 'Invalid email. 1' })
+                return res.status(400).json({ error: 'Invalid email.' })
             }
 
             //Validate if email is invalid.
             const regEmail = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
             if (!regEmail.exec(email)) {
-                return res.status(400).json({ error: 'Invalid email. 2' })
+                return res.status(400).json({ error: 'Invalid email.' })
             }
 
             //Validate is email come from La Salle domain.
@@ -29,7 +34,14 @@ export default async function handler(req, res) {
             const emailDomain = parts.slice(-3).join('.')
 
             if (emailDomain !== 'delasallesantiago.edu.do') {
-                return res.status(400).json({ error: 'Invalid email. 3' })
+                return res.status(400).json({ error: 'Invalid email.' })
+            }
+
+            //* Picture
+            const pictureFound = await Picture.findById(id)
+
+            if (!pictureFound) {
+                return res.status(404).json({ error: 'Picture not found!' })
             }
 
             //* User creation
@@ -73,7 +85,10 @@ export default async function handler(req, res) {
                     //Variables del HTML a reemplazar
                     var replacements = {
                         email: email,
-                        verifyLink: `https://concours-de-photographie.vercel.app/verify-email?id=${userFound._id.toString()}`,
+                        concourseIMG: pictureFound.imgURL,
+                        verifyLink: `https://concours-de-photographie.vercel.app/verify-email?id=${userFound._id.toString()}?voteId=${id}`,
+                        author: pictureFound.author,
+                        classRoom: pictureFound.classRoom,
                     }
                     var htmlToSend = template(replacements)
                     var mailOptions = {

@@ -1,26 +1,58 @@
-import Head from 'next/head'
 import { useEffect } from 'react'
 import axios from 'axios'
-import { poppins } from 'utils'
 import { useRouter } from 'next/router'
+import swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { poppins } from 'utils'
 
-export default function VerifyEmail() {
+const Swal = withReactContent(swal)
+
+export async function getServerSideProps({ query }) {
+    return { props: { id: query.id, voteId: query.voteId } }
+}
+
+export default function VerifyEmail({ id, voteId }) {
     const router = useRouter()
-
     useEffect(() => {
-        axios.post('/api/verify-email', { id: router.query.id }).then((res) => {
-            if (res.status !== 200) {
-                return alert('Hubo un error inesperado...')
-            }
+        if (id.length <= 0 || id === '' || id === undefined) {
+            return
+        }
 
-            alert('¡Correo verificado satisfactoriamente!')
-            return router.push('/')
-        })
+        if (voteId.length <= 0 || voteId === '' || voteId === undefined) {
+            return
+        }
+
+        axios
+            .post('/api/verify-email', { id, voteId })
+            .then((res) => {
+                if (res.status !== 200) {
+                    return alert('Hubo un error inesperado...')
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: <span className={poppins.className}>E-Mail Vérifié!</span>,
+                    html: (
+                        <p className={poppins.className}>
+                            Vous pouvez maintenant accéder à la page principale et voter.
+                        </p>
+                    ),
+                }).then(() => {
+                    router.push('/')
+                })
+            })
+            .catch((err) => {
+                if (err.response.data.message === 'was-verify') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: <span className={poppins.className}>Erreur!</span>,
+                        html: <p className={poppins.className}>Cet E-mail est vérifié!</p>,
+                    }).then(() => {
+                        router.push('/')
+                    })
+                }
+            })
     }, [])
 
-    return (
-        <>
-            <main></main>
-        </>
-    )
+    return <></>
 }

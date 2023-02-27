@@ -1,79 +1,38 @@
-import Head from 'next/head'
+import { useState } from 'react'
 import styles from '@/styles/Home.module.css'
 import CompetitionImg from '@/components/CompetitionImg'
 import { poppins } from 'utils'
+import axios from 'axios'
 
-export default function Home() {
-    const COMPETITION_IMG_DATA_MOCK = [
-        {
-            id: 0,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/1.jpg',
-        },
-        {
-            id: 1,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/2.jpeg',
-        },
-        {
-            id: 2,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/3.jpg',
-        },
-        {
-            id: 3,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/4.jpg',
-        },
-        {
-            id: 4,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/5.jpeg',
-        },
-        {
-            id: 5,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/6.jpeg',
-        },
-        {
-            id: 6,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/4.jpg',
-        },
-        {
-            id: 7,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/5.jpeg',
-        },
-        {
-            id: 8,
-            author: 'Emil Rodríguez',
-            classroom: '6to B',
-            src: '/examples/6.jpeg',
-        },
-    ]
+export async function getServerSideProps() {
+    try {
+        const res = await axios.get('http://localhost:3000/api/pictures')
 
-    const elections = true
+        return {
+            props: { pictures: res.data.pictures },
+        }
+    } catch (err) {
+        console.log(err)
+    }
+
+    return { props: { pictures: [] } }
+}
+
+export default function Home({ pictures }) {
+    const [elections, setElections] = useState(true)
+
     return (
         <>
             <main className={styles.main}>
                 {elections && (
                     <div className={styles.image_list}>
-                        {COMPETITION_IMG_DATA_MOCK.map(({ id, author, classroom, src }, i) => (
+                        {pictures.map(({ _id, author, classRoom, imgURL }, i) => (
                             <CompetitionImg
                                 key={i}
-                                id={id}
+                                id={_id}
                                 author={author}
-                                classroom={classroom}
-                                src={src}
+                                classRoom={classRoom}
+                                imgURL={imgURL}
                                 fontClass={poppins.className}
                             />
                         ))}

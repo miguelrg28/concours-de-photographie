@@ -2,10 +2,10 @@ import styles from '@/styles/components/Layout.module.css'
 import Image from 'next/image'
 import LogoOIF from '../../public/img/logos/OIF.png'
 import LogoSalle from '../../public/img/logos/salle.png'
-import AuthButton from '../AuthButton'
 import Head from 'next/head'
+import { poppins } from 'utils'
 
-const Layout = ({ classFont, children }) => (
+const Layout = ({ children }) => (
     <>
         <Head>
             <title>Concours de photographie | 2023</title>
@@ -18,7 +18,7 @@ const Layout = ({ classFont, children }) => (
         <div className={styles.background}> </div>
 
         <div className={styles.general_contaiener}>
-            <div className={`${classFont} ${styles.layout}`}>
+            <div className={`${poppins.className} ${styles.layout}`}>
                 <header>
                     <div className={styles.logo_container}>
                         <a href="https://www.francophonie.org/">
