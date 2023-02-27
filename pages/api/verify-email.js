@@ -1,5 +1,6 @@
 import dbConnect from 'utils/dbConnect'
 import User from 'utils/models/User'
+import Picture from 'utils/models/Picture'
 
 dbConnect()
 export default async function handler(req, res) {
@@ -20,7 +21,11 @@ export default async function handler(req, res) {
 
                 await User.findByIdAndUpdate(id, { verified: true })
 
-                res.status(200).json({ message: 'already-verify' })
+                await Picture.findByIdAndUpdate(voteId, {
+                    $push: { votes: id },
+                })
+
+                res.status(200).json({ message: 'already-verify-voted' })
             } catch (err) {
                 res.status(500).json({ error: 'Ha ocurrido un error.' })
             }

@@ -86,7 +86,7 @@ export default async function handler(req, res) {
                     var replacements = {
                         email: email,
                         concourseIMG: pictureFound.imgURL,
-                        verifyLink: `https://concours-de-photographie.vercel.app/verify-email?id=${userFound._id.toString()}?voteId=${id}`,
+                        verifyLink: `https://concours-de-photographie.vercel.app/verify-email?id=${userFound._id.toString()}&voteId=${id}`,
                         author: pictureFound.author,
                         classRoom: pictureFound.classRoom,
                     }

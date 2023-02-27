@@ -63,9 +63,26 @@ const CompetitionImg = ({ id, author, classRoom, imgURL }) => {
                 preConfirm: async (email) => {
                     try {
                         const res = await axios.post('/api/send-email', { id, email })
-                        console.log(res)
+
+                        if (res.status === 200) {
+                            Swal.fire({
+                                icon: 'success',
+                                html: (
+                                    <p
+                                        className={poppins.className}
+                                    >{`L'email de vérification a été envoyé`}</p>
+                                ),
+                            })
+                        }
                     } catch (err) {
-                        console.error(err)
+                        Swal.fire({
+                            icon: 'error',
+                            html: (
+                                <p
+                                    className={poppins.className}
+                                >{`L'e-mail est en cours d'utilisation ou une erreur inattendue s'est produite.`}</p>
+                            ),
+                        })
                     }
                 },
             })
