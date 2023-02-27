@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export async function getServerSideProps() {
     try {
-        const res = await axios.get('http://localhost:3000/api/pictures')
+        const res = await axios.get(`${process.env.API_URL}/pictures`)
 
         return {
             props: { pictures: res.data.pictures },
