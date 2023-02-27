@@ -44,12 +44,16 @@ export default async function handler(req, res) {
                 return res.status(404).json({ error: 'Picture not found!' })
             }
 
-            //* User creation
-            const newUser = new User({
-                email,
-            })
+            const userFound = await User.findOne({ email })
 
-            await newUser.save()
+            if (!userFound) {
+                //* User creation
+                const newUser = new User({
+                    email,
+                })
+
+                await newUser.save()
+            }
 
             //* Sending the email
             const readHTMLFile = function (path, callback) {
@@ -73,7 +77,7 @@ export default async function handler(req, res) {
             const htmlDirectory = path.join(process.cwd(), 'public')
 
             try {
-                const userFound = await User.findOne({ email })
+                const userData = await User.findOne({ email })
 
                 readHTMLFile(htmlDirectory + '/emailTemplate.html', function (err, html) {
                     if (err) {
@@ -86,7 +90,7 @@ export default async function handler(req, res) {
                     var replacements = {
                         email: email,
                         concourseIMG: pictureFound.imgURL,
-                        verifyLink: `https://concours-de-photographie.vercel.app/verify-email?id=${userFound._id.toString()}&voteId=${id}`,
+                        verifyLink: `https://concours-de-photographie.vercel.app/verify-email?id=${userData._id.toString()}&voteId=${id}`,
                         author: pictureFound.author,
                         classRoom: pictureFound.classRoom,
                     }
