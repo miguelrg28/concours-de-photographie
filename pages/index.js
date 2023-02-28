@@ -26,18 +26,16 @@ export default function Home({ pictures }) {
             <main className={styles.main}>
                 {elections && (
                     <div className={styles.image_list}>
-                        {pictures
-                            .sort(() => Math.random() - 0.5)
-                            .map(({ _id, author, classRoom, imgURL }, i) => (
-                                <CompetitionImg
-                                    key={i}
-                                    id={_id}
-                                    author={author}
-                                    classRoom={classRoom}
-                                    imgURL={imgURL}
-                                    fontClass={poppins.className}
-                                />
-                            ))}
+                        {pictures.map(({ _id, author, classRoom, imgURL }, i) => (
+                            <CompetitionImg
+                                key={i}
+                                id={_id}
+                                author={author}
+                                classRoom={classRoom}
+                                imgURL={imgURL}
+                                fontClass={poppins.className}
+                            />
+                        ))}
                     </div>
                 )}
 

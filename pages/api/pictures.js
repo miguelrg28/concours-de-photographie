@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 
                 return res.status(200).send({
                     status: 'success',
-                    pictures,
+                    pictures: pictures.sort(() => Math.random() - 0.5),
                 })
             } catch (err) {
                 console.error(err)
