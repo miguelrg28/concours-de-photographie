@@ -92,6 +92,8 @@ const CompetitionImg = ({ id, author, classRoom, imgURL }) => {
                             })
                         }
 
+                        console.log(err)
+
                         return Swal.fire({
                             icon: 'error',
                             html: (

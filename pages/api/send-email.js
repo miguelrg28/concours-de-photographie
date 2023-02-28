@@ -55,7 +55,7 @@ export default async function handler(req, res) {
                 await newUser.save()
             }
 
-            if (userFound.verified === true) {
+            if (userFound?.verified === true) {
                 return res.status(400).json({ message: 'already-verified' })
             }
 
