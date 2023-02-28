@@ -55,6 +55,10 @@ export default async function handler(req, res) {
                 await newUser.save()
             }
 
+            if (userFound.verified === true) {
+                return res.status(400).json({ message: 'already-verified' })
+            }
+
             //* Sending the email
             const readHTMLFile = function (path, callback) {
                 fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {

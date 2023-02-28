@@ -65,7 +65,7 @@ const CompetitionImg = ({ id, author, classRoom, imgURL }) => {
                         const res = await axios.post('/api/send-email', { id, email })
 
                         if (res.status === 200) {
-                            Swal.fire({
+                            return Swal.fire({
                                 icon: 'success',
                                 html: (
                                     <p
@@ -75,7 +75,15 @@ const CompetitionImg = ({ id, author, classRoom, imgURL }) => {
                             })
                         }
                     } catch (err) {
-                        Swal.fire({
+                        if (err.response.data.message === 'already-verified') {
+                            return Swal.fire({
+                                icon: 'error',
+                                title: <span className={poppins.className}>Erreur!</span>,
+                                html: <p className={poppins.className}>Vous avez déjà voté !</p>,
+                            })
+                        }
+
+                        return Swal.fire({
                             icon: 'error',
                             html: (
                                 <p

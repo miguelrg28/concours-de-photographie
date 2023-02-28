@@ -31,10 +31,10 @@ export default function VerifyEmail({ id, voteId }) {
 
                 Swal.fire({
                     icon: 'success',
-                    title: <span className={poppins.className}>E-Mail Vérifié!</span>,
+                    title: <span className={poppins.className}>Vérifié !</span>,
                     html: (
                         <p className={poppins.className}>
-                            Vous pouvez maintenant accéder à la page principale et voter.
+                            Votre vote a été vérifié et enregistré avec succès !
                         </p>
                     ),
                 }).then(() => {
