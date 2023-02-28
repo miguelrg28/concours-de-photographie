@@ -25,18 +25,24 @@ export default function VerifyEmail({ id, voteId }) {
         axios
             .post('/api/verify-email', { id, voteId })
             .then((res) => {
-                if (res.status !== 200) {
-                    return alert('Hubo un error inesperado...')
+
+                if(res.status === 200 && res.data.message === 'already-verify-voted'){
+                    Swal.fire({
+                        icon: 'success',
+                        title: <span className={poppins.className}>Vérifié !</span>,
+                        html: (
+                            <p className={poppins.className}>
+                                Votre vote a été vérifié et enregistré avec succès !
+                            </p>)
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: <span className={poppins.className}>Erreur!</span>,
+                        html: <p className={poppins.className}>Quelque chose d'inattendu s'est produit !</p>,
+                    })
                 }
 
-                Swal.fire({
-                    icon: 'success',
-                    title: <span className={poppins.className}>Vérifié !</span>,
-                    html: (
-                        <p className={poppins.className}>
-                            Votre vote a été vérifié et enregistré avec succès !
-                        </p>
-                    ),
                 }).then(() => {
                     router.push('/')
                 })
