@@ -68,9 +68,18 @@ const CompetitionImg = ({ id, author, classRoom, imgURL }) => {
                             return Swal.fire({
                                 icon: 'success',
                                 html: (
-                                    <p
-                                        className={poppins.className}
-                                    >{`L'email de vérification a été envoyé`}</p>
+                                    <>
+                                        <p
+                                            className={poppins.className}
+                                        >{`L'email de vérification a été envoyé.`}</p>
+
+                                        <span
+                                            className={poppins.className}
+                                            style={{ fontSize: '.8em' }}
+                                        >
+                                            Si no le llega su correo, revise su buzón de spam.
+                                        </span>
+                                    </>
                                 ),
                             })
                         }
