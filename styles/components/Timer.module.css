@@ -1,0 +1,25 @@
+.timer {
+    display: flex;
+    justify-content: stretch;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: #0000005c;
+    gap: 35px;
+}
+
+.timer > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.timer > div p {
+    color: #fff;
+    margin: 4px;
+    font-weight: 300;
+}
+
+.timer > div span.text {
+    font-size: 1em;
+}

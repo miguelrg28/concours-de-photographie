@@ -10,6 +10,36 @@
     overflow: hidden;
 }
 
+.winners_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.winners_container h2 {
+    color: #fff;
+}
+
+.presentation_container {
+    display: flex;
+    padding-top: 10px;
+    width: 100%;
+    flex-direction: column;
+    gap: 16px 0;
+    background-color: #1b2c65;
+    padding: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.presentation_container span {
+    color: #fff;
+    font-size: 1.4em;
+    font-weight: 500;
+}
+
 @media (max-width: 700px) {
     .image_list {
         -moz-column-count: 2;
