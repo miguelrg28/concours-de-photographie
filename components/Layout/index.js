@@ -38,7 +38,14 @@ const Layout = ({ children }) => (
                     </div>
                     <section>
                         <span>Concours de photographie | 2023</span>
-                        <p>Votez pour votre photo préférée au Concours photo de la Francophonie</p>
+                        <p>
+                            Votez pour votre photo préférée au Concours photo de la Francophonie
+                            <br /> <br />
+                            <strong>Thème du concours:</strong> représentation de la France en
+                            République Dominicaine.
+                            <br /> <strong>Tema del concurso:</strong> representación de Francia en
+                            República Dominicana.
+                        </p>
                     </section>
                 </header>
                 {children}
