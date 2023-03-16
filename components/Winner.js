@@ -1,14 +1,7 @@
 import Image from 'next/image'
 import styles from '@/styles/components/Winner.module.css'
 
-const Winner = ({
-    fullName = 'Fulano Detal',
-    classRoom = '6to B',
-    profileImg,
-    picture,
-    position,
-    reverse,
-}) => {
+const Winner = ({ fullName = 'Fulano Detal', classRoom = '6to B', picture, position, reverse }) => {
     return (
         <>
             <div className={`${styles.winner} ${reverse ? styles.reverse : ''}`}>

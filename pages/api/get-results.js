@@ -6,7 +6,7 @@ dbConnect()
 
 export default async function handler(req, res) {
     switch (req.method) {
-        case 'GET':
+        case 'POST':
             try {
                 const { please } = req.body
 
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
                     return res.status(400).json({ message: 'needed arguments' })
                 }
 
-                const Pictures = await Picture.find({}).select('author classRoom votes')
+                const Pictures = await Picture.find({}).select('author imgURL classRoom votes')
 
                 const voteRes = [] //* Results for the client
 
@@ -25,6 +25,7 @@ export default async function handler(req, res) {
 
                     voteRes.push({
                         author: Pictures[i].author,
+                        imgURL: Pictures[i].imgURL,
                         classRoom: Pictures[i].classRoom,
                         voteCount: Pictures[i].votes.length,
                     })
