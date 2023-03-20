@@ -20,7 +20,7 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ pictures }) {
-    const [electionsStatus, setElectionsStatus] = useState(0)
+    const [electionsStatus, setElectionsStatus] = useState(1)
 
     return (
         <>
