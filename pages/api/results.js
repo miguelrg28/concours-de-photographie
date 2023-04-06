@@ -41,9 +41,10 @@ export default async function handler(req, res) {
                     }
                 }
 
-                console.log(voteRes)
-
-                return res.status(200).json({ message: 'Success!', results: voteRes })
+                return res.status(200).json({
+                    message: 'Success!',
+                    results: voteRes.sort((a, b) => b.voteCount - a.voteCount),
+                })
             } catch (err) {
                 console.log(err)
                 return res.status(500)

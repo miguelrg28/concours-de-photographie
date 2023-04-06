@@ -1,33 +1,26 @@
 import styles from '@/styles/Home.module.css'
-import { poppins } from 'utils'
 import axios from 'axios'
-import Winner from '@/components/Winner'
 
 export async function getServerSideProps() {
     try {
-        const { data } = await axios.post(`${process.env.API_URL}/get-results`, { please: true })
-        return { props: { winners: data } }
+        const { data } = await axios.get(`${process.env.API_URL}/voters`)
+        return { props: { voters: data.voters } }
     } catch (err) {
         console.log(err)
     }
-    return { props: { winners: [] } }
+    return { props: { voters: [] } }
 }
 
-export default function Results({ winners }) {
+export default function Results({ voters }) {
     return (
         <>
             <main className={styles.main}>
                 <div className={styles.winners_container}>
-                    <h2>Gagnants du concours !</h2>
-                    {winners.map((winner, i) => (
-                        <Winner
-                            key={i}
-                            position={i + 1}
-                            fullName={winner.author}
-                            classRoom={winner.classRoom}
-                            picture={winner.imgURL}
-                            reverse={(i + 1) % 2 === 0}
-                        />
+                    <h2>Électeurs!</h2>
+                    {voters.map((voter, i) => (
+                        <div key={i} className={styles.voter}>
+                            {voter.email}
+                        </div>
                     ))}
                 </div>
             </main>
